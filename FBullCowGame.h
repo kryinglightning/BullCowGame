@@ -1,4 +1,10 @@
+/*
+the game logic (no view code or direst user interaction), 
+the game is a simple guess the word game
+*/
+
 #pragma once
+#include <iostream>
 #include <string>
 
 using FString = std::string;
@@ -12,6 +18,7 @@ struct FBullCowCount
 
 enum class EGuessStatus
 {
+	Invalid,
 	OK,
 	Not_Isogram,
 	Wrong_Length,
@@ -23,19 +30,26 @@ class FBullCowGame
 {
 public:
 	FBullCowGame(); //constructor
+
 	int32 GetMaxTries() const;
 	int32 GetValidWordLength();
 	int32 GetCurrentTry() const;
 	bool IsGameWon() const;
 	EGuessStatus CheckGuessValidity(FString) const;
 
-	void Reset(); // TODO make a rich return value
+	void Reset(); 
 
-	FBullCowCount SubmitGuess(FString);
+
+	FBullCowCount SubmitValidGuess(FString);
 
 private:
 	FString MyValidWord;
 	int32 MyCurrentTry;
 	int32 MyMaxTries; //see constructor for initialization
+	bool bGameIsWon;
+	int32 UserLengthChoice;
+
+	bool IsIsogram(FString) const;
+	bool IsLowercase(FString) const;
 
 };
